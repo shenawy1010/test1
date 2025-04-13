@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الشناوي سبورت | أحدث الأخبار الرياضية</title>
+    <style>
+        /* Reset وتنسيقات عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        /* التنسيقات الرئيسية */
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* الهيدر */
+        header {
+            background: linear-gradient(135deg, #1a2e5a 0%, #d50000 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 50px;
+            margin-left: 10px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        
+        /* القائمة المنسدلة */
+        nav ul {
+            display: flex;
+            position: relative;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            padding: 8px 12px;
+            transition: all 0.3s;
+            font-weight: 600;
+            border-radius: 4px;
+            font-size: 16px;
+            display: block;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        nav ul li a.active {
+            background-color: #fff;
+            color: #d50000;
+        }
+        
+        /* القوائم الفرعية */
+        nav ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            z-index: 100;
+        }
+        
+        nav ul li:hover > ul {
+            display: block;
+        }
+        
+        nav ul ul li {
+            margin: 0;
+            width: 100%;
+        }
+        
+        nav ul ul a {
+            padding: 10px 15px;
+            color: #333;
+            border-bottom: 1px solid #eee;
+        }
+        
+        nav ul ul a:hover {
+            background-color: #f5f5f5;
+            color: #d50000;
+        }
+        
+        /* شريط المباريات */
+        .matches-bar {
+            background-color: #263238;
+            color: white;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .matches-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        
+        .match {
+            background-color: #37474f;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            min-width: 250px;
+            transition: all 0.3s;
+        }
+        
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80px;
+        }
+        
+        .team img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+        
+        .score {
+            font-weight: bold;
+            font-size: 20px;
+            margin: 0 15px;
+            color: #ffeb3b;
+        }
+        
+        .match-time {
+            font-size: 12px;
+            color: #b0bec5;
+        }
+        
+        /* المحتوى الرئيسي */
+        main {
+            flex: 3;
+            padding: 20px;
+            background-color: white;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        /* السايدبار */
+        aside {
+            flex: 1;
+            padding: 20px;
+            margin: 20px 0;
+            margin-left: 20px;
+        }
+        
+        .sidebar-widget {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .sidebar-widget h3 {
+            border-right: 4px solid #d50000;
+            padding-right: 10px;
+            margin-bottom: 15px;
+            color: #1a2e5a;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-widget ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-widget ul li:hover {
+            padding-right: 10px;
+            color: #d50000;
+        }
+        
+        .sidebar-widget ul li:last-child {
+            border-bottom: none;
+        }
+        
+        /* المقالات الرياضية */
+        .article {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s;
+        }
+        
+        .article:hover {
+            transform: translateY(-3px);
+        }
+        
+        .article h2 {
+            color: #1a2e5a;
+            margin-bottom: 12px;
+            font-size: 22px;
+            line-height: 1.4;
+            transition: all 0.3s;
+        }
+        
+        .article-meta {
+            color: #78909c;
+            font-size: 14px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .article-meta span {
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .article-meta i {
+            margin-left: 5px;
+            color: #d50000;
+        }
+        
+        .article-img-container {
+            position: relative;
+            margin-bottom: 15px;
+            border: 5px solid white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .article-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .article-excerpt {
+            margin-bottom: 15px;
+            color: #546e7a;
+            line-height: 1.7;
+            transition: all 0.3s;
+        }
+        
+        .read-more {
+            display: inline-block;
+            background-color: #d50000;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .read-more:hover {
+            background-color: #b71c1c;
+            transform: translateY(-2px);
+        }
+        
+        /* زر عرض المزيد */
+        .load-more {
+            display: block;
+            text-align: center;
+            margin: 30px auto 0;
+            background-color: #1a2e5a;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .load-more:hover {
+            background-color: #d50000;
+            transform: translateY(-2px);
+        }
+        
+        /* تأثير التحميل */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #d50000;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* المقالات المخفية */
+        .hidden-articles {
+            display: block;
+        }
+        
+        .article.hidden {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .article.visible {
+            display: block;
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* تصنيفات البطولات */
+        .leagues {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .league {
+            background-color: #f5f5f5;
+            padding: 8px 15px;
+            margin: 0 10px 10px 0;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .league:hover, .league.active {
+            background-color: #d50000;
+            color: white;
+        }
+        
+        /* الفوتر */
+        footer {
+            background-color: #1a2e5a;
+            color: white;
+            padding: 30px 0 20px;
+            margin-top: 30px;
+            transition: all 0.3s;
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-widget {
+            flex: 1;
+            min-width: 250px;
+            padding: 0 15px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-widget h3 {
+            margin-bottom: 15px;
+            color: #d50000;
+            font-size: 18px;
+            position: relative;
+            padding-bottom: 8px;
+        }
+        
+        .footer-widget h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 40px;
+            height: 2px;
+            background-color: #d50000;
+        }
+        
+        .footer-widget ul li {
+            margin-bottom: 8px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid #2c3e5a;
+            font-size: 14px;
+            color: #b0bec5;
+        }
+        
+        /* تأثيرات إضافية */
+        .breaking-news {
+            background-color: #d50000;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .video-icon {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(213, 0, 0, 0.8);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* الصورة المخصصة */
+        .custom-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        
+        /* زر العودة للأعلى */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #1a2e5a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 99;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #d50000;
+            transform: translateY(-5px);
+        }
+
+        .back-to-top i {
+            font-size: 20px;
+        }
+
+        /* زر تبديل الوضع */
+        .theme-toggle {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #1a2e5a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 99;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .theme-toggle:hover {
+            background-color: #d50000;
+            transform: translateY(-5px);
+        }
+
+        .theme-toggle i {
+            font-size: 20px;
+        }
+
+        /* تلوين تدريجي لزر العودة للأعلى */
+        .back-to-top.scroll-25 {
+            background-color: #1a2e5a;
+        }
+
+        .back-to-top.scroll-50 {
+            background-color: #1565c0;
+        }
+
+        .back-to-top.scroll-75 {
+            background-color: #0d47a1;
+        }
+
+        .back-to-top.scroll-100 {
+            background-color: #002171;
+        }
+
+        /* الوضع الليلي */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode main,
+        body.dark-mode .sidebar-widget,
+        body.dark-mode .article {
+            background-color: #1e1e1e;
+            color: #f5f5f5;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        body.dark-mode .article-excerpt {
+            color: #b0bec5;
+        }
+
+        body.dark-mode .league {
+            background-color: #2d2d2d;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode nav ul ul {
+            background-color: #2d2d2d;
+        }
+
+        body.dark-mode nav ul ul a {
+            color: #f5f5f5;
+        }
+
+        body.dark-mode nav ul ul a:hover {
+            background-color: #3d3d3d;
+        }
+
+        body.dark-mode .matches-bar {
+            background-color: #1a1a1a;
+        }
+
+        body.dark-mode .match {
+            background-color: #2d2d2d;
+        }
+
+        body.dark-mode footer {
+            background-color: #0d1a30;
+        }
+
+        /* التجاوب */
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            aside {
+                margin-left: 0;
+            }
+            
+            .footer-widget {
+                min-width: 50%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .footer-widget {
+                min-width: 100%;
+            }
+            
+            .match {
+                min-width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .article-img {
+                height: 200px;
+            }
+
+            .back-to-top,
+            .theme-toggle {
+                width: 40px;
+                height: 40px;
+                bottom: 20px;
+                left: 20px;
+            }
+
+            .theme-toggle {
+                top: 20px;
+                left: 20px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- زر تبديل الوضع -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- الهيدر -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                الشناوي سبورت
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">الرئيسية</a></li>
+                    <li>
+                        <a href="news.html">أخبار الرياضة</a>
+                        <ul>
+                            <li><a href="#">كرة القدم</a></li>
+                            <li><a href="#">كرة السلة</a></li>
+                            <li><a href="#">كرة اليد</a></li>
+                            <li><a href="#">ألعاب القوى</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="leagues.html">البطولات</a>
+                        <ul>
+                            <li><a href="#">الدوري المصري</a></li>
+                            <li><a href="#">الدوري السعودي</a></li>
+                            <li><a href="#">الدوري الإنجليزي</a></li>
+                            <li><a href="#">دوري أبطال أفريقيا</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="videos.html">فيديوهات</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- شريط المباريات -->
+    
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <main>
+            <!-- تصنيفات البطولات -->
+            <div class="leagues">
+                <a href="#" class="league active">الدوري المصري</a>
+                <a href="#" class="league">الدوري السعودي</a>
+                <a href="#" class="league">الدوري الإنجليزي</a>
+                <a href="#" class="league">الدوري الإسباني</a>
+                <a href="#" class="league">الدوري الأوروبي</a>
+                <a href="#" class="league">كأس العالم</a>
+            </div>
+
+            <!-- المقالات المرئية -->
+            <article class="article visible">
+                <span class="breaking-news">خبر عاجل</span>
+                <h2>الأهلي يتغلب على الزمالك بثنائية في ديربي القاهرة</h2>
+                <div class="article-meta">
+                    <span><i class="far fa-clock"></i> منذ ساعتين</span>
+                    <span><i class="far fa-futbol"></i> الدوري المصري</span>
+                </div>
+                <div class="article-img-container">
+                    <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="مباراة الأهلي والزمالك" class="article-img">
+                    <div class="video-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="article-excerpt">
+                    <p>حقق النادي الأهلي فوزًا ثمينًا على غريمه التقليدي الزمالك بنتيجة 2-1 في المباراة التي جمعتهما مساء اليوم على استاد القاهرة ضمن منافسات الجولة العاشرة من الدوري المصري الممتاز.</p>
+                </div>
+                <a href="#" class="read-more">تابع التفاصيل</a>
+            </article>
+
+            <article class="article visible">
+                <h2>ميسي يوجه رسالة لجماهير برشلونة قبل الكلاسيكو</h2>
+                <div class="article-meta">
+                    <span><i class="far fa-clock"></i> منذ 5 ساعات</span>
+                    <span><i class="far fa-futbol"></i> الدوري الإسباني</span>
+                </div>
+                <div class="article-img-container">
+                    <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="ليونيل ميسي" class="article-img">
+                </div>
+                <div class="article-excerpt">
+                    <p>وجه النجم الأرجنتيني ليونيل ميسي رسالة خاصة لجماهير برشلونة قبل مواجهة الكلاسيكو المرتقبة ضد ريال مدريد غداً في إطار منافسات الدوري الإسباني.</p>
+                </div>
+                <a href="#" class="read-more">تابع التفاصيل</a>
+            </article>
+
+            <article class="article visible">
+                <h2>الاتحاد المصري يعلن عن مفاجأة في تشكيلة المنتخب</h2>
+                <div class="article-meta">
+                    <span><i class="far fa-clock"></i> منذ يوم</span>
+                    <span><i class="far fa-futbol"></i> أخبار المنتخب</span>
+                </div>
+                <div class="article-img-container">
+                    <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="المنتخب المصري" class="article-img">
+                </div>
+                <div class="article-excerpt">
+                    <p>كشف الاتحاد المصري لكرة القدم عن مفاجأة في تشكيلة المنتخب الوطني التي سيعلن عنها المدير الفني الجديد للمشاركة في التصفيات المؤهلة لكأس الأمم الأفريقية.</p>
+                </div>
+                <a href="#" class="read-more">تابع التفاصيل</a>
+            </article>
+
+            <!-- المقالات المخفية -->
+            <div class="hidden-articles">
+                <article class="article hidden">
+                    <h2>رسمياً.. موعد مباراة الأهلي والزمالك في الكونفدرالية</h2>
+                    <div class="article-meta">
+                        <span><i class="far fa-clock"></i> منذ 4 ساعات</span>
+                        <span><i class="far fa-futbol"></i> دوري الأبطال</span>
+                    </div>
+                    <div class="article-img-container">
+                        <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="دوري الأبطال" class="article-img">
+                    </div>
+                    <div class="article-excerpt">
+                        <p>أعلن الاتحاد الأفريقي لكرة القدم "كاف" عن موعد مباراة الأهلي والزمالك في إطار منافسات دوري أبطال أفريقيا والتي ستكون واحدة من أهم المواجهات في البطولة هذا الموسم.</p>
+                    </div>
+                    <a href="#" class="read-more">تابع التفاصيل</a>
+                </article>
+
+                <article class="article hidden">
+                    <h2>إصابة صلاح تثير القلق قبل مواجهة ليفربول</h2>
+                    <div class="article-meta">
+                        <span><i class="far fa-clock"></i> منذ 6 ساعات</span>
+                        <span><i class="far fa-futbol"></i> الدوري الإنجليزي</span>
+                    </div>
+                    <div class="article-img-container">
+                        <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="محمد صلاح" class="article-img">
+                    </div>
+                    <div class="article-excerpt">
+                        <p>أصيب النجم المصري محمد صلاح أثناء تدريبات ليفربول مما أثار قلق الجماهير قبل مواجهة الفريق المهمة في الدوري الإنجليزي الممتاز ضد تشيلسي نهاية الأسبوع.</p>
+                    </div>
+                    <a href="#" class="read-more">تابع التفاصيل</a>
+                </article>
+
+                <article class="article hidden">
+                    <h2>رونالدو يكسر رقمًا قياسيًا جديدًا في الدوري السعودي</h2>
+                    <div class="article-meta">
+                        <span><i class="far fa-clock"></i> منذ 8 ساعات</span>
+                        <span><i class="far fa-futbol"></i> الدوري السعودي</span>
+                    </div>
+                    <div class="article-img-container">
+                        <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="كريستيانو رونالدو" class="article-img">
+                    </div>
+                    <div class="article-excerpt">
+                        <p>حطم البرتغالي كريستيانو رونالدو رقمًا قياسيًا جديدًا في الدوري السعودي بعد تسجيله ثلاثية في شباك الفيصلي ليرفع رصيده إلى 25 هدفًا هذا الموسم.</p>
+                    </div>
+                    <a href="#" class="read-more">تابع التفاصيل</a>
+                </article>
+
+                <article class="article hidden">
+                    <h2>الهلال يتأهل إلى نهائي كأس الملك بعد فوز مثير على النصر</h2>
+                    <div class="article-meta">
+                        <span><i class="far fa-clock"></i> منذ 10 ساعات</span>
+                        <span><i class="far fa-futbol"></i> الدوري السعودي</span>
+                    </div>
+                    <div class="article-img-container">
+                        <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="مباراة الهلال والنصر" class="article-img">
+                    </div>
+                    <div class="article-excerpt">
+                        <p>تأهل فريق الهلال إلى نهائي كأس الملك بعد فوزه المثير على غريمه التقليدي النصر بنتيجة 3-2 في المباراة التي جمعت الفريقين مساء اليوم على ملعب الملك فهد الدولي.</p>
+                    </div>
+                    <a href="#" class="read-more">تابع التفاصيل</a>
+                </article>
+
+                <article class="article hidden">
+                    <h2>الاتحاد الدولي يعلن عن استضافة مصر لكأس العالم للأندية 2025</h2>
+                    <div class="article-meta">
+                        <span><i class="far fa-clock"></i> منذ 12 ساعة</span>
+                        <span><i class="far fa-futbol"></i> أخبار عالمية</span>
+                    </div>
+                    <div class="article-img-container">
+                        <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="كأس العالم للأندية" class="article-img">
+                    </div>
+                    <div class="article-excerpt">
+                        <p>أعلن الاتحاد الدولي لكرة القدم "فيفا" عن اختيار مصر لاستضافة بطولة كأس العالم للأندية 2025، وذلك خلال الاجتماع الذي عقد اليوم في مقر الفيفا بمدينة زيورخ السويسرية.</p>
+                    </div>
+                    <a href="#" class="read-more">تابع التفاصيل</a>
+                </article>
+            </div>
+
+            <!-- تأثير التحميل -->
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>جاري تحميل المزيد من الأخبار...</p>
+            </div>
+
+            <!-- زر عرض المزيد -->
+            <button class="load-more">عرض المزيد من الأخبار</button>
+        </main>
+
+        <!-- السايدبار -->
+        <aside>
+            <div class="sidebar-widget">
+                <h3>مباريات اليوم</h3>
+                <ul>
+                    <li><a href="#">الأهلي 2 - 1 الزمالك</a></li>
+                    <li><a href="#">مانشستر يونايتد - ليفربول</a></li>
+                    <li><a href="#">يوفنتوس 0 - 0 ميلان</a></li>
+                    <li><a href="#">بايرن ميونخ 3 - 0 دورتموند</a></li>
+                    <li><a href="#">الهلال - النصر</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3>أهم الأخبار</h3>
+                <ul>
+                    <li><a href="#">إصابة صلاح تثير القلق قبل ليفربول</a></li>
+                    <li><a href="#">رسمياً.. موعد مباراة الأهلي والزمالك في الكونفدرالية</a></li>
+                    <li><a href="#">مفاجأة في تشكيلة المنتخب المصري</a></li>
+                    <li><a href="#">رونالدو يكسر رقمًا قياسيًا جديدًا</a></li>
+                    <li><a href="#">الاتحاد المصري يعلن عن استاد المباراة النهائية للكأس</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3>ترتيب الدوري المصري</h3>
+                <ul>
+                    <li><a href="#">1. الأهلي - 25 نقطة</a></li>
+                    <li><a href="#">2. بيراميدز - 22 نقطة</a></li>
+                    <li><a href="#">3. الزمالك - 20 نقطة</a></li>
+                    <li><a href="#">4. المصري - 18 نقطة</a></li>
+                    <li><a href="#">5. سيراميكا - 16 نقطة</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-widget">
+                <h3>أقسام الموقع</h3>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="news.html">أخبار الرياضة</a></li>
+                    <li><a href="matches.html">المباريات</a></li>
+                    <li><a href="leagues.html">البطولات</a></li>
+                    <li><a href="videos.html">فيديوهات</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-widget">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                    <li><a href="privacy.html">سياسة الخصوصية</a></li>
+                    <li><a href="terms.html">شروط الاستخدام</a></li>
+                    <li><a href="advertise.html">الإعلان على الموقع</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-widget">
+                <h3>تابعنا على</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> فيسبوك</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> تويتر</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> يوتيوب</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> إنستجرام</a></li>
+                    <li><a href="#"><i class="fab fa-telegram"></i> تليجرام</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            جميع الحقوق محفوظة &copy; 2025 الشناوي سبورت | تصميم وتطوير فريق الشناوي
+        </div>
+    </footer>
+
+    <!-- زر العودة للأعلى -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // كود جافاسكريبت لزر العودة للأعلى
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const bodyHeight = document.body.clientHeight;
+            const scrollPercentage = (scrollPosition / (bodyHeight - windowHeight)) * 100;
+            
+            // إظهار أو إخفاء الزر حسب موضع التمرير
+            if (scrollPosition > 300) {
+                backToTopButton.classList.add('visible');
+                
+                // تغيير لون الزر حسب نسبة التمرير
+                if (scrollPercentage < 25) {
+                    backToTopButton.className = 'back-to-top visible scroll-25';
+                } else if (scrollPercentage < 50) {
+                    backToTopButton.className = 'back-to-top visible scroll-50';
+                } else if (scrollPercentage < 75) {
+                    backToTopButton.className = 'back-to-top visible scroll-75';
+                } else {
+                    backToTopButton.className = 'back-to-top visible scroll-100';
+                }
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // كود جافاسكريبت لتبديل الوضع
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        themeToggle.addEventListener('click', function() {
+            body.classList.toggle('dark-mode');
+            
+            // تغيير الأيقونة حسب الوضع
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+            
+            // حفظ التفضيل في localStorage
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // تحميل الوضع المفضل عند بدء التحميل
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            
+            // كود جافاسكريبت لعرض المزيد من المقالات
+            const loadMoreBtn = document.querySelector('.load-more');
+            const loadingElement = document.querySelector('.loading');
+            const hiddenArticles = document.querySelectorAll('.article.hidden');
+            const articlesContainer = document.querySelector('main');
+            let articlesToShow = 2; // عدد المقالات التي تظهر مع كل نقرة
+            let currentIndex = 0;
+
+            loadMoreBtn.addEventListener('click', function() {
+                // إظهار تأثير التحميل
+                loadMoreBtn.style.display = 'none';
+                loadingElement.style.display = 'block';
+
+                // محاكاة عملية التحميل
+                setTimeout(function() {
+                    // إخفاء تأثير التحميل
+                    loadingElement.style.display = 'none';
+
+                    // إظهار المقالات التالية
+                    const nextIndex = currentIndex + articlesToShow;
+                    let articlesShown = 0;
+                    
+                    for (let i = currentIndex; i < nextIndex && i < hiddenArticles.length; i++) {
+                        hiddenArticles[i].classList.remove('hidden');
+                        hiddenArticles[i].classList.add('visible');
+                        articlesShown++;
+                        
+                        // نقل المقال إلى قبل زر "عرض المزيد" في الـ DOM
+                        articlesContainer.insertBefore(hiddenArticles[i], loadMoreBtn.parentNode);
+                    }
+                    currentIndex = nextIndex;
+
+                    // إظهار زر "عرض المزيد" إذا كان هناك المزيد من المقالات
+                    if (currentIndex < hiddenArticles.length) {
+                        loadMoreBtn.style.display = 'block';
+                    } else {
+                        loadMoreBtn.style.display = 'none';
+                    }
+                }, 800); // وقت التأخير لمحاكاة التحميل (800 مللي ثانية)
+            });
+        });
+    </script>
+</body>
+</html>
