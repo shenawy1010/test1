@@ -3,9 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الشناوي سبورت | أحدث الأخبار الرياضية</title>
+    <title>مدونتي - مقارن عشوائية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Reset وتنسيقات عامة */
+        :root {
+            --primary-color: #007bff; /* أزرق */
+            --secondary-color: #FFFFFF; /* أبيض */
+            --text-color: #333;
+            --light-brown: #ffffff;
+            --dark-brown: #0066CC;
+            --blue-bar: #1E90FF; /* أزرق */
+            --news-button: #007bff; /* لون زر الأخبار */
+        }
+        
+        .dark-mode {
+            --primary-color: #0066CC;
+            --secondary-color: #121212;
+            --text-color: #f0f0f0;
+            --light-brown: #176ec5;
+            --dark-brown: #ffffff;
+            --blue-bar: #0066CC;
+            --news-button: #0055AA;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -14,273 +34,191 @@
         }
         
         body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-            transition: background-color 0.3s, color 0.3s;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            padding-top: 100px; /* لحساب الشريط العلوي وشريط الأخبار */
         }
         
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        ul {
-            list-style: none;
-        }
-        
-        /* التنسيقات الرئيسية */
-        .container {
-            display: flex;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-        
-        /* الهيدر */
-        header {
-            background: linear-gradient(135deg, #1a2e5a 0%, #d50000 100%);
-            color: white;
-            padding: 20px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            position: sticky;
+        /* شريط التنقل العلوي */
+        .top-bar {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            padding: 10px 0;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
             top: 0;
-            z-index: 100;
-            transition: all 0.3s;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
         
-        .header-container {
+        .top-bar.hidden {
+            transform: translateY(-100%);
+        }
+        
+        .top-bar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
         
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
+        .top-bar .logo {
             display: flex;
             align-items: center;
         }
         
-        .logo img {
-            width: 50px;
+        .top-bar .logo img {
+            height: 50px;
             margin-left: 10px;
-            border-radius: 50%;
-            border: 2px solid white;
         }
         
-        /* القائمة المنسدلة */
-        nav ul {
+        .top-bar .logo h1 {
+            color: var(--primary-color);
+            font-size: 24px;
+        }
+        
+        .top-bar nav ul {
             display: flex;
+            list-style: none;
+        }
+        
+        .top-bar nav ul li {
+            margin-right: 20px;
             position: relative;
         }
         
-        nav ul li {
-            margin-left: 25px;
-            position: relative;
+        .top-bar nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 5px 0;
+            transition: color 0.3s;
         }
         
-        nav ul li a {
-            padding: 8px 12px;
-            transition: all 0.3s;
-            font-weight: 600;
-            border-radius: 4px;
-            font-size: 16px;
-            display: block;
+        .top-bar nav ul li a:hover {
+            color: var(--primary-color);
         }
         
-        nav ul li a:hover {
-            background-color: rgba(255,255,255,0.2);
+        .top-bar .search-bar {
+            display: flex;
+            flex-grow: 1;
+            max-width: 400px;
+            margin: 0 20px;
         }
         
-        nav ul li a.active {
-            background-color: #fff;
-            color: #d50000;
-        }
-        
-        /* القوائم الفرعية */
-        nav ul ul {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background-color: white;
-            min-width: 200px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            border-radius: 4px;
-            z-index: 100;
-        }
-        
-        nav ul li:hover > ul {
-            display: block;
-        }
-        
-        nav ul ul li {
-            margin: 0;
+        .top-bar .search-bar input {
             width: 100%;
-        }
-        
-        nav ul ul a {
             padding: 10px 15px;
-            color: #333;
-            border-bottom: 1px solid #eee;
+            border: 1px solid var(--primary-color);
+            border-radius: 30px 0 0 30px;
+            outline: none;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
         }
         
-        nav ul ul a:hover {
-            background-color: #f5f5f5;
-            color: #d50000;
-        }
-        
-        /* شريط المباريات */
-        .matches-bar {
-            background-color: #263238;
-            color: white;
-            padding: 10px 0;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-        
-        .matches-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-        }
-        
-        .match {
-            background-color: #37474f;
+        .top-bar .search-bar button {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
             padding: 10px 15px;
-            border-radius: 5px;
-            margin: 5px;
-            display: flex;
-            align-items: center;
-            min-width: 250px;
-            transition: all 0.3s;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
         }
         
-        .team {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 80px;
-        }
-        
-        .team img {
-            width: 30px;
-            height: 30px;
-            object-fit: contain;
-            margin-bottom: 5px;
-        }
-        
-        .score {
-            font-weight: bold;
+        .top-bar .social-icons a {
+            color: var(--primary-color);
+            margin-right: 10px;
             font-size: 20px;
-            margin: 0 15px;
-            color: #ffeb3b;
+            transition: color 0.3s;
         }
         
-        .match-time {
-            font-size: 12px;
-            color: #b0bec5;
+        .top-bar .social-icons a:hover {
+            color: var(--dark-brown);
+        }
+        
+        /* شريط الأخبار */
+        .breaking-news .dark-mode{
+            background-color: #f0f0f0;
+            padding: 10px 0;
+            position: fixed;
+            top: 60px; /* أسفل الشريط العلوي */
+            left: 0;
+            right: 0;
+            z-index: 999;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        
+        .breaking-news.hidden {
+            transform: translateY(-100%);
+        }
+        
+        .breaking-news .container {
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .news-label {
+            background-color: var(--news-button);
+            color: var(--secondary-color);
+            padding: 5px 10px;
+            margin-left: 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        
+        .news-ticker {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+        
+        .news-ticker ul {
+            list-style: none;
+            display: flex;
+            animation: ticker 20s linear infinite;
+        }
+        
+        .news-ticker li {
+            white-space: nowrap;
+            margin-left: 30px;
+            color: var(--text-color);
+        }
+        
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
         
         /* المحتوى الرئيسي */
-        main {
-            flex: 3;
-            padding: 20px;
-            background-color: white;
-            margin: 20px 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s;
+        .main-content {
+            display: flex;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
         
-        /* السايدبار */
-        aside {
-            flex: 1;
-            padding: 20px;
-            margin: 20px 0;
-            margin-left: 20px;
+        /* المقالات */
+        .articles {
+            flex: 70%;
+            padding-left: 20px;
         }
         
-        .sidebar-widget {
-            background-color: white;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
-        
-        .sidebar-widget h3 {
-            border-right: 4px solid #d50000;
-            padding-right: 10px;
-            margin-bottom: 15px;
-            color: #1a2e5a;
-            font-size: 18px;
-            transition: all 0.3s;
-        }
-        
-        .sidebar-widget ul li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            transition: all 0.3s;
-        }
-        
-        .sidebar-widget ul li:hover {
-            padding-right: 10px;
-            color: #d50000;
-        }
-        
-        .sidebar-widget ul li:last-child {
-            border-bottom: none;
-        }
-        
-        /* المقالات الرياضية */
         .article {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            transition: all 0.3s;
-        }
-        
-        .article:hover {
-            transform: translateY(-3px);
-        }
-        
-        .article h2 {
-            color: #1a2e5a;
-            margin-bottom: 12px;
-            font-size: 22px;
-            line-height: 1.4;
-            transition: all 0.3s;
-        }
-        
-        .article-meta {
-            color: #78909c;
-            font-size: 14px;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s;
-        }
-        
-        .article-meta span {
-            margin-left: 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .article-meta i {
-            margin-left: 5px;
-            color: #d50000;
-        }
-        
-        .article-img-container {
-            position: relative;
-            margin-bottom: 15px;
-            border: 5px solid white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-radius: 4px;
             overflow: hidden;
         }
         
@@ -288,144 +226,161 @@
             width: 100%;
             height: 300px;
             object-fit: cover;
-            display: block;
+        }
+        
+        .article-content {
+            padding: 20px;
+        }
+        
+        .article-meta {
+            display: flex;
+            margin-bottom: 10px;
+            color: var(--light-brown);
+            font-size: 14px;
+        }
+        
+        .article-meta span {
+            margin-left: 15px;
+        }
+        
+        .article-title {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 22px;
         }
         
         .article-excerpt {
             margin-bottom: 15px;
-            color: #546e7a;
-            line-height: 1.7;
-            transition: all 0.3s;
+            line-height: 1.6;
         }
         
         .read-more {
             display: inline-block;
-            background-color: #d50000;
-            color: white;
-            padding: 8px 20px;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 8px 15px;
             border-radius: 4px;
-            font-size: 14px;
-            transition: all 0.3s;
-            margin-top: 10px;
+            text-decoration: none;
+            transition: background-color 0.3s;
         }
         
         .read-more:hover {
-            background-color: #b71c1c;
-            transform: translateY(-2px);
+            background-color: var(--dark-brown);
         }
         
-        /* زر عرض المزيد */
-        .load-more {
-            display: block;
-            text-align: center;
-            margin: 30px auto 0;
-            background-color: #1a2e5a;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 4px;
-            font-size: 16px;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
+        /* السايدبار */
+        .sidebar {
+            flex: 30%;
+            padding-right: 20px;
         }
         
-        .load-more:hover {
-            background-color: #d50000;
-            transform: translateY(-2px);
-        }
-        
-        /* تأثير التحميل */
-        .loading {
-            display: none;
-            text-align: center;
+        .widget {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             padding: 20px;
+            margin-bottom: 30px;
         }
         
-        .loading-spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #d50000;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
+        .widget-title {
+            color: var(--primary-color);
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-brown);
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .categories-list, .pages-list {
+            list-style: none;
         }
         
-        /* المقالات المخفية */
-        .hidden-articles {
+        .categories-list li, .pages-list li {
+            margin-bottom: 10px;
+        }
+        
+        .categories-list a, .pages-list a {
+            text-decoration: none;
+            color: var(--text-color);
+            transition: color 0.3s;
             display: block;
+            padding: 5px 0;
         }
         
-        .article.hidden {
-            display: none;
-            opacity: 0;
-            transform: translateY(20px);
+        .categories-list a:hover, .pages-list a:hover {
+            color: var(--primary-color);
+            padding-right: 5px;
         }
         
-        .article.visible {
-            display: block;
-            animation: fadeIn 0.5s ease-in forwards;
+        .popular-posts .post {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed var(--light-brown);
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .popular-posts .post-img {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-left: 10px;
         }
         
-        /* تصنيفات البطولات */
-        .leagues {
+        .popular-posts .post-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .popular-posts .post-date {
+            font-size: 12px;
+            color: var(--light-brown);
+        }
+        
+        .tags {
             display: flex;
             flex-wrap: wrap;
-            margin-bottom: 20px;
         }
         
-        .league {
-            background-color: #f5f5f5;
-            padding: 8px 15px;
-            margin: 0 10px 10px 0;
-            border-radius: 20px;
-            font-size: 14px;
-            transition: all 0.3s;
+        .tag {
+            background-color: var(--light-brown);
+            color: var(--secondary-color);
+            padding: 5px 10px;
+            border-radius: 3px;
+            margin: 0 5px 5px 0;
+            font-size: 12px;
+            text-decoration: none;
         }
         
-        .league:hover, .league.active {
-            background-color: #d50000;
-            color: white;
+        .tag:hover {
+            background-color: var(--primary-color);
         }
         
         /* الفوتر */
         footer {
-            background-color: #1a2e5a;
-            color: white;
-            padding: 30px 0 20px;
-            margin-top: 30px;
-            transition: all 0.3s;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 50px 0 20px;
+            margin-top: 50px;
         }
         
         .footer-container {
             display: flex;
             justify-content: space-between;
-            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
         
         .footer-widget {
             flex: 1;
-            min-width: 250px;
             padding: 0 15px;
-            margin-bottom: 20px;
         }
         
         .footer-widget h3 {
-            margin-bottom: 15px;
-            color: #d50000;
             font-size: 18px;
+            margin-bottom: 20px;
             position: relative;
-            padding-bottom: 8px;
+            padding-bottom: 10px;
         }
         
         .footer-widget h3::after {
@@ -433,633 +388,622 @@
             position: absolute;
             bottom: 0;
             right: 0;
-            width: 40px;
+            width: 50px;
             height: 2px;
-            background-color: #d50000;
+            background-color: var(--light-brown);
         }
         
-        .footer-widget ul li {
-            margin-bottom: 8px;
+        .footer-widget p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: padding-right 0.3s;
+        }
+        
+        .footer-links a:hover {
+            padding-right: 5px;
+            text-decoration: underline;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background-color: rgba(255,255,255,0.1);
+            color: var(--secondary-color);
+            border-radius: 50%;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--light-brown);
         }
         
         .copyright {
             text-align: center;
             padding-top: 20px;
-            margin-top: 20px;
-            border-top: 1px solid #2c3e5a;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
             font-size: 14px;
-            color: #b0bec5;
         }
         
-        /* تأثيرات إضافية */
-        .breaking-news {
-            background-color: #d50000;
-            color: white;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        
-        .video-icon {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: rgba(213, 0, 0, 0.8);
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* الصورة المخصصة */
-        .custom-image {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border: 5px solid white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-radius: 4px;
-            margin-bottom: 15px;
-        }
-        
-        /* زر العودة للأعلى */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #1a2e5a;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 99;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            background-color: #d50000;
-            transform: translateY(-5px);
-        }
-
-        .back-to-top i {
-            font-size: 20px;
-        }
-
-        /* زر تبديل الوضع */
-        .theme-toggle {
-            position: fixed;
-            top: 30px;
-            left: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #1a2e5a;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 99;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .theme-toggle:hover {
-            background-color: #d50000;
-            transform: translateY(-5px);
-        }
-
-        .theme-toggle i {
-            font-size: 20px;
-        }
-
-        /* تلوين تدريجي لزر العودة للأعلى */
-        .back-to-top.scroll-25 {
-            background-color: #1a2e5a;
-        }
-
-        .back-to-top.scroll-50 {
-            background-color: #1565c0;
-        }
-
-        .back-to-top.scroll-75 {
-            background-color: #0d47a1;
-        }
-
-        .back-to-top.scroll-100 {
-            background-color: #002171;
-        }
-
-        /* الوضع الليلي */
-        body.dark-mode {
-            background-color: #121212;
-            color: #f5f5f5;
-        }
-
-        body.dark-mode main,
-        body.dark-mode .sidebar-widget,
-        body.dark-mode .article {
-            background-color: #1e1e1e;
-            color: #f5f5f5;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        body.dark-mode .article-excerpt {
-            color: #b0bec5;
-        }
-
-        body.dark-mode .league {
-            background-color: #2d2d2d;
-            color: #f5f5f5;
-        }
-
-        body.dark-mode nav ul ul {
-            background-color: #2d2d2d;
-        }
-
-        body.dark-mode nav ul ul a {
-            color: #f5f5f5;
-        }
-
-        body.dark-mode nav ul ul a:hover {
-            background-color: #3d3d3d;
-        }
-
-        body.dark-mode .matches-bar {
-            background-color: #1a1a1a;
-        }
-
-        body.dark-mode .match {
-            background-color: #2d2d2d;
-        }
-
-        body.dark-mode footer {
-            background-color: #0d1a30;
-        }
-
-        /* التجاوب */
+        /* التجاوبية */
         @media (max-width: 992px) {
-            .container {
+            .main-content {
                 flex-direction: column;
             }
             
-            aside {
-                margin-left: 0;
+            .articles, .sidebar {
+                flex: 100%;
+                padding: 0;
+            }
+            
+            .sidebar {
+                margin-top: 30px;
+            }
+            
+            .footer-container {
+                flex-wrap: wrap;
             }
             
             .footer-widget {
-                min-width: 50%;
+                flex: 50%;
+                margin-bottom: 30px;
+            }
+            
+            .top-bar .container {
+                flex-wrap: wrap;
+            }
+            
+            .top-bar .search-bar {
+                order: 3;
+                margin: 15px 0;
+                max-width: 100%;
             }
         }
         
         @media (max-width: 768px) {
-            .header-container {
+            body {
+                padding-top: 120px; /* تعديل لحساب الشريط العلوي وشريط الأخبار في الجوال */
+            }
+            
+            .breaking-news {
+                top: 60px;
+            }
+            
+            .top-bar .container {
                 flex-direction: column;
             }
             
-            nav ul {
-                margin-top: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
+            .top-bar .logo {
+                margin-bottom: 15px;
             }
             
-            nav ul li {
+            .top-bar nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+            
+            .top-bar nav ul li {
                 margin: 5px 10px;
             }
             
+            .top-bar .social-icons {
+                margin-top: 15px;
+            }
+            
             .footer-widget {
-                min-width: 100%;
-            }
-            
-            .match {
-                min-width: 100%;
-                margin-bottom: 10px;
-            }
-            
-            .article-img {
-                height: 200px;
-            }
-
-            .back-to-top,
-            .theme-toggle {
-                width: 40px;
-                height: 40px;
-                bottom: 20px;
-                left: 20px;
-            }
-
-            .theme-toggle {
-                top: 20px;
-                left: 20px;
+                flex: 100%;
             }
         }
+
+        /* زر تبديل الوضع */
+        .theme-toggle {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--dark-brown);
+            transform: scale(1.1);
+        }
+
+        .theme-toggle i {
+            font-size: 18px;
+        }
+
+        /* تعديلات للوضع الليلي */
+        .dark-mode .theme-toggle {
+            background-color: var(--light-brown);
+            color: var(--secondary-color);
+        }
+
+        /* زر البحث الكبير */
+        .search-toggle {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+            font-size: 20px;
+        }
+
+        .search-toggle:hover {
+            color: var(--dark-brown);
+            transform: scale(1.1);
+        }
+
+        /* شريط البحث المركزي */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .search-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .search-box {
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 20px 60px 20px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .search-box button {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-box button:hover {
+            background-color: var(--dark-brown);
+        }
+
+        .close-search {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .close-search:hover {
+            transform: rotate(90deg);
+        }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- زر تبديل الوضع -->
-    <div class="theme-toggle" id="themeToggle">
-        <i class="fas fa-moon"></i>
-    </div>
-
-    <!-- الهيدر -->
-    <header>
-        <div class="container header-container">
+    <!-- الشريط العلوي -->
+    <div class="top-bar" id="topBar">
+        <div class="container">
             <div class="logo">
-                الشناوي سبورت
+                <h1>الشناوي</h1>
             </div>
+            
             <nav>
                 <ul>
-                    <li><a href="index.html" class="active">الرئيسية</a></li>
-                    <li>
-                        <a href="news.html">أخبار الرياضة</a>
-                        <ul>
-                            <li><a href="#">كرة القدم</a></li>
-                            <li><a href="#">كرة السلة</a></li>
-                            <li><a href="#">كرة اليد</a></li>
-                            <li><a href="#">ألعاب القوى</a></li>
-                        </ul>
-                    </li>
-                    
-                    <li>
-                        <a href="leagues.html">البطولات</a>
-                        <ul>
-                            <li><a href="#">الدوري المصري</a></li>
-                            <li><a href="#">الدوري السعودي</a></li>
-                            <li><a href="#">الدوري الإنجليزي</a></li>
-                            <li><a href="#">دوري أبطال أفريقيا</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="videos.html">فيديوهات</a></li>
-                    <li><a href="about.html">من نحن</a></li>
-                    <li><a href="contact.html">اتصل بنا</a></li>
+                    <li><a href="#">الرئيسية</a></li>
+                    <li><a href="#">تقنية</a></li>
+                    <li><a href="#">تصميم</a></li>
+                    <li><a href="#">برمجة</a></li>
+                    <li><a href="#">أمن معلومات</a></li>
+                    <li><a href="#">مقالات</a></li>
+                    <li><a href="#">من نحن</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
                 </ul>
             </nav>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="ابحث هنا...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-blogger-b"></i></a>
+            </div>
         </div>
-    </header>
-
-    <!-- شريط المباريات -->
-    
-
-    <!-- المحتوى الرئيسي -->
-    <div class="container">
-        <main>
-            <!-- تصنيفات البطولات -->
-            <div class="leagues">
-                <a href="#" class="league active">الدوري المصري</a>
-                <a href="#" class="league">الدوري السعودي</a>
-                <a href="#" class="league">الدوري الإنجليزي</a>
-                <a href="#" class="league">الدوري الإسباني</a>
-                <a href="#" class="league">الدوري الأوروبي</a>
-                <a href="#" class="league">كأس العالم</a>
-            </div>
-
-            <!-- المقالات المرئية -->
-            <article class="article visible">
-                <span class="breaking-news">خبر عاجل</span>
-                <h2>الأهلي يتغلب على الزمالك بثنائية في ديربي القاهرة</h2>
-                <div class="article-meta">
-                    <span><i class="far fa-clock"></i> منذ ساعتين</span>
-                    <span><i class="far fa-futbol"></i> الدوري المصري</span>
-                </div>
-                <div class="article-img-container">
-                    <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="مباراة الأهلي والزمالك" class="article-img">
-                    <div class="video-icon">
-                        <i class="fas fa-play"></i>
-                    </div>
-                </div>
-                <div class="article-excerpt">
-                    <p>حقق النادي الأهلي فوزًا ثمينًا على غريمه التقليدي الزمالك بنتيجة 2-1 في المباراة التي جمعتهما مساء اليوم على استاد القاهرة ضمن منافسات الجولة العاشرة من الدوري المصري الممتاز.</p>
-                </div>
-                <a href="#" class="read-more">تابع التفاصيل</a>
-            </article>
-
-            <article class="article visible">
-                <h2>ميسي يوجه رسالة لجماهير برشلونة قبل الكلاسيكو</h2>
-                <div class="article-meta">
-                    <span><i class="far fa-clock"></i> منذ 5 ساعات</span>
-                    <span><i class="far fa-futbol"></i> الدوري الإسباني</span>
-                </div>
-                <div class="article-img-container">
-                    <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="ليونيل ميسي" class="article-img">
-                </div>
-                <div class="article-excerpt">
-                    <p>وجه النجم الأرجنتيني ليونيل ميسي رسالة خاصة لجماهير برشلونة قبل مواجهة الكلاسيكو المرتقبة ضد ريال مدريد غداً في إطار منافسات الدوري الإسباني.</p>
-                </div>
-                <a href="#" class="read-more">تابع التفاصيل</a>
-            </article>
-
-            <article class="article visible">
-                <h2>الاتحاد المصري يعلن عن مفاجأة في تشكيلة المنتخب</h2>
-                <div class="article-meta">
-                    <span><i class="far fa-clock"></i> منذ يوم</span>
-                    <span><i class="far fa-futbol"></i> أخبار المنتخب</span>
-                </div>
-                <div class="article-img-container">
-                    <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="المنتخب المصري" class="article-img">
-                </div>
-                <div class="article-excerpt">
-                    <p>كشف الاتحاد المصري لكرة القدم عن مفاجأة في تشكيلة المنتخب الوطني التي سيعلن عنها المدير الفني الجديد للمشاركة في التصفيات المؤهلة لكأس الأمم الأفريقية.</p>
-                </div>
-                <a href="#" class="read-more">تابع التفاصيل</a>
-            </article>
-
-            <!-- المقالات المخفية -->
-            <div class="hidden-articles">
-                <article class="article hidden">
-                    <h2>رسمياً.. موعد مباراة الأهلي والزمالك في الكونفدرالية</h2>
-                    <div class="article-meta">
-                        <span><i class="far fa-clock"></i> منذ 4 ساعات</span>
-                        <span><i class="far fa-futbol"></i> دوري الأبطال</span>
-                    </div>
-                    <div class="article-img-container">
-                        <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="دوري الأبطال" class="article-img">
-                    </div>
-                    <div class="article-excerpt">
-                        <p>أعلن الاتحاد الأفريقي لكرة القدم "كاف" عن موعد مباراة الأهلي والزمالك في إطار منافسات دوري أبطال أفريقيا والتي ستكون واحدة من أهم المواجهات في البطولة هذا الموسم.</p>
-                    </div>
-                    <a href="#" class="read-more">تابع التفاصيل</a>
-                </article>
-
-                <article class="article hidden">
-                    <h2>إصابة صلاح تثير القلق قبل مواجهة ليفربول</h2>
-                    <div class="article-meta">
-                        <span><i class="far fa-clock"></i> منذ 6 ساعات</span>
-                        <span><i class="far fa-futbol"></i> الدوري الإنجليزي</span>
-                    </div>
-                    <div class="article-img-container">
-                        <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="محمد صلاح" class="article-img">
-                    </div>
-                    <div class="article-excerpt">
-                        <p>أصيب النجم المصري محمد صلاح أثناء تدريبات ليفربول مما أثار قلق الجماهير قبل مواجهة الفريق المهمة في الدوري الإنجليزي الممتاز ضد تشيلسي نهاية الأسبوع.</p>
-                    </div>
-                    <a href="#" class="read-more">تابع التفاصيل</a>
-                </article>
-
-                <article class="article hidden">
-                    <h2>رونالدو يكسر رقمًا قياسيًا جديدًا في الدوري السعودي</h2>
-                    <div class="article-meta">
-                        <span><i class="far fa-clock"></i> منذ 8 ساعات</span>
-                        <span><i class="far fa-futbol"></i> الدوري السعودي</span>
-                    </div>
-                    <div class="article-img-container">
-                        <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="كريستيانو رونالدو" class="article-img">
-                    </div>
-                    <div class="article-excerpt">
-                        <p>حطم البرتغالي كريستيانو رونالدو رقمًا قياسيًا جديدًا في الدوري السعودي بعد تسجيله ثلاثية في شباك الفيصلي ليرفع رصيده إلى 25 هدفًا هذا الموسم.</p>
-                    </div>
-                    <a href="#" class="read-more">تابع التفاصيل</a>
-                </article>
-
-                <article class="article hidden">
-                    <h2>الهلال يتأهل إلى نهائي كأس الملك بعد فوز مثير على النصر</h2>
-                    <div class="article-meta">
-                        <span><i class="far fa-clock"></i> منذ 10 ساعات</span>
-                        <span><i class="far fa-futbol"></i> الدوري السعودي</span>
-                    </div>
-                    <div class="article-img-container">
-                        <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="مباراة الهلال والنصر" class="article-img">
-                    </div>
-                    <div class="article-excerpt">
-                        <p>تأهل فريق الهلال إلى نهائي كأس الملك بعد فوزه المثير على غريمه التقليدي النصر بنتيجة 3-2 في المباراة التي جمعت الفريقين مساء اليوم على ملعب الملك فهد الدولي.</p>
-                    </div>
-                    <a href="#" class="read-more">تابع التفاصيل</a>
-                </article>
-
-                <article class="article hidden">
-                    <h2>الاتحاد الدولي يعلن عن استضافة مصر لكأس العالم للأندية 2025</h2>
-                    <div class="article-meta">
-                        <span><i class="far fa-clock"></i> منذ 12 ساعة</span>
-                        <span><i class="far fa-futbol"></i> أخبار عالمية</span>
-                    </div>
-                    <div class="article-img-container">
-                        <img src="https://i.postimg.cc/RF5v1m65/hqdefault.jpg" alt="كأس العالم للأندية" class="article-img">
-                    </div>
-                    <div class="article-excerpt">
-                        <p>أعلن الاتحاد الدولي لكرة القدم "فيفا" عن اختيار مصر لاستضافة بطولة كأس العالم للأندية 2025، وذلك خلال الاجتماع الذي عقد اليوم في مقر الفيفا بمدينة زيورخ السويسرية.</p>
-                    </div>
-                    <a href="#" class="read-more">تابع التفاصيل</a>
-                </article>
-            </div>
-
-            <!-- تأثير التحميل -->
-            <div class="loading">
-                <div class="loading-spinner"></div>
-                <p>جاري تحميل المزيد من الأخبار...</p>
-            </div>
-
-            <!-- زر عرض المزيد -->
-            <button class="load-more">عرض المزيد من الأخبار</button>
-        </main>
-
-        <!-- السايدبار -->
-        <aside>
-            <div class="sidebar-widget">
-                <h3>مباريات اليوم</h3>
-                <ul>
-                    <li><a href="#">الأهلي 2 - 1 الزمالك</a></li>
-                    <li><a href="#">مانشستر يونايتد - ليفربول</a></li>
-                    <li><a href="#">يوفنتوس 0 - 0 ميلان</a></li>
-                    <li><a href="#">بايرن ميونخ 3 - 0 دورتموند</a></li>
-                    <li><a href="#">الهلال - النصر</a></li>
-                </ul>
-            </div>
-
-            <div class="sidebar-widget">
-                <h3>أهم الأخبار</h3>
-                <ul>
-                    <li><a href="#">إصابة صلاح تثير القلق قبل ليفربول</a></li>
-                    <li><a href="#">رسمياً.. موعد مباراة الأهلي والزمالك في الكونفدرالية</a></li>
-                    <li><a href="#">مفاجأة في تشكيلة المنتخب المصري</a></li>
-                    <li><a href="#">رونالدو يكسر رقمًا قياسيًا جديدًا</a></li>
-                    <li><a href="#">الاتحاد المصري يعلن عن استاد المباراة النهائية للكأس</a></li>
-                </ul>
-            </div>
-
-            <div class="sidebar-widget">
-                <h3>ترتيب الدوري المصري</h3>
-                <ul>
-                    <li><a href="#">1. الأهلي - 25 نقطة</a></li>
-                    <li><a href="#">2. بيراميدز - 22 نقطة</a></li>
-                    <li><a href="#">3. الزمالك - 20 نقطة</a></li>
-                    <li><a href="#">4. المصري - 18 نقطة</a></li>
-                    <li><a href="#">5. سيراميكا - 16 نقطة</a></li>
-                </ul>
-            </div>
-        </aside>
     </div>
-
+    
+    <!-- شريط الأخبار العاجلة -->
+    <div class="breaking-news" id="breakingNews">
+        <div class="container">
+            <span class="news-label">آخر الأخبار</span>
+            <div class="news-ticker">
+                <ul>
+                    <li>خبر عاجل 1: تحديث جديد في عالم تطوير الويب.</li>
+                    <li>خبر عاجل 2: اكتشاف ثغرة أمنية خطيرة في نظام التشغيل.</li>
+                    <li>خبر عاجل 3: إطلاق تقنية جديدة للذكاء الاصطناعي.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content">
+        <!-- المقالات -->
+        <div class="articles">
+            <article class="article">
+                <img src="https://i.postimg.cc/RVdsrNtQ/Closed-8.jpg" alt="صورة المقال" class="article-img">
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span><i class="far fa-user"></i> كتبه: أحمد محمد</span>
+                        <span><i class="far fa-calendar-alt"></i> 15 يونيو 2025</span>
+                        <span><i class="far fa-eye"></i> 1,245 مشاهدة</span>
+                    </div>
+                    <h2 class="article-title">أفضل أدوات تطوير الويب لعام 2025</h2>
+                    <p class="article-excerpt">
+                        في عالم يتطور بسرعة، يحتاج مطورو الويب إلى البقاء على اطلاع بأحدث الأدوات والتقنيات. في هذه المقالة، سنستعرض معًا أفضل أدوات تطوير الويب التي يجب أن تعرفها في عام 2025 لتظل في صدارة المنافسة وتقدم أعمالًا استثنائية لعملائك.
+                    </p>
+                    <a href="#" class="read-more">قراءة المزيد</a>
+                </div>
+            </article>
+            
+            <article class="article">
+                <img src="https://i.postimg.cc/RVdsrNtQ/Closed-8.jpg" alt="صورة المقال" class="article-img">
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span><i class="far fa-user"></i> كتبه: سارة أحمد</span>
+                        <span><i class="far fa-calendar-alt"></i> 10 يونيو 2023</span>
+                        <span><i class="far fa-eye"></i> 892 مشاهدة</span>
+                    </div>
+                    <h2 class="article-title">دليل شامل لتعلم CSS Grid</h2>
+                    <p class="article-excerpt">
+                        CSS Grid هي تقنية تخطيط ثورية غيرت طريقة تصميمنا لمواقع الويب. في هذا الدليل الشامل، سنأخذك في رحلة لتعلم كل ما تحتاج معرفته عن CSS Grid بدءًا من الأساسيات ووصولاً إلى التقنيات المتقدمة، مع أمثلة عملية وتطبيقات حقيقية.
+                    </p>
+                    <a href="#" class="read-more">قراءة المزيد</a>
+                </div>
+            </article>
+            
+            <article class="article">
+                <img src="https://via.placeholder.com/800x400" alt="صورة المقال" class="article-img">
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span><i class="far fa-user"></i> كتبه: علي محمود</span>
+                        <span><i class="far fa-calendar-alt"></i> 5 يونيو 2023</span>
+                        <span><i class="far fa-eye"></i> 1,532 مشاهدة</span>
+                    </div>
+                    <h2 class="article-title">كيفية تحسين أداء موقعك وسرعة تحميله</h2>
+                    <p class="article-excerpt">
+                        سرعة الموقع هي عامل حاسم في تجربة المستخدم وفي تصنيفات محركات البحث. في هذه المقالة، سنستعرض أهم الاستراتيجيات والتقنيات العملية لتحسين أداء موقعك وتسريع تحميله، بدءًا من تحسين الصور ووصولاً إلى تقنيات التخزين المؤقت والتحميل الكسول.
+                    </p>
+                    <a href="#" class="read-more">قراءة المزيد</a>
+                </div>
+            </article>
+        </div>
+        
+        <!-- السايدبار -->
+        <div class="sidebar">
+            <div class="widget">
+                <h3 class="widget-title">الأقسام</h3>
+                <ul class="categories-list">
+                    <li><a href="#"><i class="fas fa-angle-left"></i> تقنية المعلومات</a></li>
+                    <li><a href="#"><i class="fas fa-angle-left"></i> تطوير الويب</a></li>
+                    <li><a href="#"><i class="fas fa-angle-left"></i> تصميم UX/UI</a></li>
+                    <li><a href="#"><i class="fas fa-angle-left"></i> برمجة تطبيقات</a></li>
+                    <li><a href="#"><i class="fas fa-angle-left"></i> أمن المعلومات</a></li>
+                    <li><a href="#"><i class="fas fa-angle-left"></i> الذكاء الاصطناعي</a></li>
+                </ul>
+            </div>
+            
+            <div class="widget">
+                <h3 class="widget-title">الصفحات</h3>
+                <ul class="pages-list">
+                    <li><a href="#"><i class="fas fa-angle-left"></i> من نحن</a></li>
+                    <li><a href="#"><i class="fas fa-angle-left"></i> سياسة الخصوصية</a></li>
+                    <li><a href="#"><i class="fas fa-angle-left"></i> شروط الاستخدام</a></li>
+                    <li><a href="#"><i class="fas fa-angle-left"></i> اتصل بنا</a></li>
+                    <li><a href="#"><i class="fas fa-angle-left"></i> الأسئلة الشائعة</a></li>
+                </ul>
+            </div>
+            
+            <div class="widget">
+                <h3 class="widget-title">أكثر المقالات مشاهدة</h3>
+                <div class="popular-posts">
+                    <div class="post">
+                        <img src="https://via.placeholder.com/100x70" alt="صورة المقال" class="post-img">
+                        <div>
+                            <h4 class="post-title">تعلم JavaScript في 30 يوم</h4>
+                            <span class="post-date">12 مايو 2023</span>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <img src="https://via.placeholder.com/100x70" alt="صورة المقال" class="post-img">
+                        <div>
+                            <h4 class="post-title">أفضل إضافات VS Code للمطورين</h4>
+                            <span class="post-date">28 أبريل 2023</span>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <img src="https://via.placeholder.com/100x70" alt="صورة المقال" class="post-img">
+                        <div>
+                            <h4 class="post-title">كيف تصبح مبرمجًا محترفًا</h4>
+                            <span class="post-date">15 أبريل 2023</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="widget">
+                <h3 class="widget-title">الكلمات الدلالية</h3>
+                <div class="tags">
+                    <a href="#" class="tag">تطوير الويب</a>
+                    <a href="#" class="tag">برمجة</a>
+                    <a href="#" class="tag">تصميم</a>
+                    <a href="#" class="tag">JavaScript</a>
+                    <a href="#" class="tag">CSS</a>
+                    <a href="#" class="tag">HTML</a>
+                    <a href="#" class="tag">React</a>
+                    <a href="#" class="tag">أمن المعلومات</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- الفوتر -->
     <footer>
-        <div class="container footer-container">
+        <div class="footer-container">
             <div class="footer-widget">
-                <h3>أقسام الموقع</h3>
-                <ul>
-                    <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="news.html">أخبار الرياضة</a></li>
-                    <li><a href="matches.html">المباريات</a></li>
-                    <li><a href="leagues.html">البطولات</a></li>
-                    <li><a href="videos.html">فيديوهات</a></li>
-                </ul>
+                <h3>عن المدونة</h3>
+                <p>
+                    مدونتي هي مدونة تقنية تهدف إلى نشر المعرفة في مجال تطوير الويب وتصميم المواقع وبرمجة التطبيقات. نقدم محتوى عالي الجودة لمساعدة المطورين والمصممين على تطوير مهاراتهم.
+                </p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
             </div>
-
+            
             <div class="footer-widget">
                 <h3>روابط سريعة</h3>
-                <ul>
-                    <li><a href="about.html">من نحن</a></li>
-                    <li><a href="contact.html">اتصل بنا</a></li>
-                    <li><a href="privacy.html">سياسة الخصوصية</a></li>
-                    <li><a href="terms.html">شروط الاستخدام</a></li>
-                    <li><a href="advertise.html">الإعلان على الموقع</a></li>
+                <ul class="footer-links">
+                    <li><a href="#">الرئيسية</a></li>
+                    <li><a href="#">المقالات</a></li>
+                    <li><a href="#">الأقسام</a></li>
+                    <li><a href="#">من نحن</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
+                    <li><a href="#">سياسة الخصوصية</a></li>
                 </ul>
             </div>
-
+            
             <div class="footer-widget">
-                <h3>تابعنا على</h3>
-                <ul>
-                    <li><a href="#"><i class="fab fa-facebook"></i> فيسبوك</a></li>
-                    <li><a href="#"><i class="fab fa-twitter"></i> تويتر</a></li>
-                    <li><a href="#"><i class="fab fa-youtube"></i> يوتيوب</a></li>
-                    <li><a href="#"><i class="fab fa-instagram"></i> إنستجرام</a></li>
-                    <li><a href="#"><i class="fab fa-telegram"></i> تليجرام</a></li>
-                </ul>
+                <h3>اتصل بنا</h3>
+                <p>
+                    <i class="fas fa-map-marker-alt"></i> 123 شارع المعرفة، مدينة التقنية<br>
+                    <i class="fas fa-phone"></i> +123456789<br>
+                    <i class="fas fa-envelope"></i> info@modawanti.com
+                </p>
+            </div>
+            
+            <div class="footer-widget">
+                <h3>النشرة البريدية</h3>
+                <p>اشترك في نشرتنا البريدية ليصلك كل جديد من مقالات ودروس.</p>
+                <form>
+                    <input type="email" placeholder="بريدك الإلكتروني" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 4px; border: none;">
+                    <button type="submit" style="background-color: var(--light-brown); color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">اشتراك</button>
+                </form>
             </div>
         </div>
-
+        
         <div class="copyright">
-            جميع الحقوق محفوظة &copy; 2025 الشناوي سبورت | تصميم وتطوير فريق الشناوي
+            <p>جميع الحقوق محفوظة &copy; 2023 مدونتي. تم التطوير بواسطة فريق مدونتي.</p>
         </div>
     </footer>
 
-    <!-- زر العودة للأعلى -->
-    <div class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
+    <!-- شريط البحث المركزي -->
+    <div class="search-overlay" id="searchOverlay">
+        <span class="close-search" id="closeSearch"><i class="fas fa-times"></i></span>
+        <div class="search-box">
+            <input type="text" placeholder="ابحث عن أي شيء..." id="mainSearchInput">
+            <button id="mainSearchButton"><i class="fas fa-search"></i></button>
+        </div>
     </div>
-
+    
     <script>
-        // كود جافاسكريبت لزر العودة للأعلى
-        const backToTopButton = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', function() {
-            const scrollPosition = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const bodyHeight = document.body.clientHeight;
-            const scrollPercentage = (scrollPosition / (bodyHeight - windowHeight)) * 100;
+        // تبديل الوضع الليلي/النهاري
+        const themeToggle = document.createElement('button');
+        themeToggle.className = 'theme-toggle';
+        themeToggle.setAttribute('aria-label', 'تبديل الوضع الليلي');
+        themeToggle.setAttribute('title', 'تبديل الوضع الليلي/النهاري');
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+
+        // زر البحث الكبير
+        const searchToggle = document.createElement('button');
+        searchToggle.className = 'search-toggle';
+        searchToggle.setAttribute('aria-label', 'فتح البحث');
+        searchToggle.setAttribute('title', 'فتح شريط البحث');
+        searchToggle.innerHTML = '<i class="fas fa-search"></i>';
+
+        // أضف الأزرار بجانب أيقونات التواصل الاجتماعي
+        const socialIcons = document.querySelector('.top-bar .social-icons');
+        socialIcons.parentNode.insertBefore(searchToggle, socialIcons);
+        socialIcons.parentNode.insertBefore(themeToggle, searchToggle);
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
             
-            // إظهار أو إخفاء الزر حسب موضع التمرير
-            if (scrollPosition > 300) {
-                backToTopButton.classList.add('visible');
-                
-                // تغيير لون الزر حسب نسبة التمرير
-                if (scrollPercentage < 25) {
-                    backToTopButton.className = 'back-to-top visible scroll-25';
-                } else if (scrollPercentage < 50) {
-                    backToTopButton.className = 'back-to-top visible scroll-50';
-                } else if (scrollPercentage < 75) {
-                    backToTopButton.className = 'back-to-top visible scroll-75';
-                } else {
-                    backToTopButton.className = 'back-to-top visible scroll-100';
-                }
-            } else {
-                backToTopButton.classList.remove('visible');
-            }
-        });
-        
-        backToTopButton.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        // كود جافاسكريبت لتبديل الوضع
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        
-        themeToggle.addEventListener('click', function() {
-            body.classList.toggle('dark-mode');
-            
-            // تغيير الأيقونة حسب الوضع
-            if (body.classList.contains('dark-mode')) {
+            if (document.body.classList.contains('dark-mode')) {
                 themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            }
-            
-            // حفظ التفضيل في localStorage
-            if (body.classList.contains('dark-mode')) {
+                themeToggle.setAttribute('aria-label', 'تبديل الوضع النهاري');
+                themeToggle.setAttribute('title', 'تبديل الوضع النهاري');
                 localStorage.setItem('theme', 'dark');
             } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                themeToggle.setAttribute('aria-label', 'تبديل الوضع الليلي');
+                themeToggle.setAttribute('title', 'تبديل الوضع الليلي');
                 localStorage.setItem('theme', 'light');
             }
         });
+
+        // التحقق من تخزين الوضع المفضل
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            themeToggle.setAttribute('aria-label', 'تبديل الوضع النهاري');
+            themeToggle.setAttribute('title', 'تبديل الوضع النهاري');
+        }
+
+        // إخفاء الشريط العلوي وشريط الأخبار عند التمرير لأسفل
+        const topBar = document.getElementById('topBar');
+        const breakingNews = document.getElementById('breakingNews');
+        let lastScroll = 0;
         
-        // تحميل الوضع المفضل عند بدء التحميل
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                body.classList.add('dark-mode');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                // التمرير لأسفل
+                topBar.classList.add('hidden');
+                breakingNews.classList.add('hidden');
+            } else {
+                // التمرير لأعلى
+                topBar.classList.remove('hidden');
+                breakingNews.classList.remove('hidden');
             }
             
-            // كود جافاسكريبت لعرض المزيد من المقالات
-            const loadMoreBtn = document.querySelector('.load-more');
-            const loadingElement = document.querySelector('.loading');
-            const hiddenArticles = document.querySelectorAll('.article.hidden');
-            const articlesContainer = document.querySelector('main');
-            let articlesToShow = 2; // عدد المقالات التي تظهر مع كل نقرة
-            let currentIndex = 0;
+            lastScroll = currentScroll;
+        });
+        
+        // محاكاة البحث
+        const searchInput = document.querySelector('.search-bar input');
+        const searchButton = document.querySelector('.search-bar button');
+        
+        searchButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (searchInput.value.trim() !== '') {
+                alert('سيتم البحث عن: ' + searchInput.value);
+                // هنا يمكنك إضافة منطق البحث الفعلي
+            }
+        });
+        
+        // جعل شريط الأخبار العاجلة متحركًا
+        const ticker = document.querySelector('.news-ticker ul');
+        const tickerItems = document.querySelectorAll('.news-ticker li');
+        
+        tickerItems.forEach(item => {
+            ticker.appendChild(item.cloneNode(true));
+        });
 
-            loadMoreBtn.addEventListener('click', function() {
-                // إظهار تأثير التحميل
-                loadMoreBtn.style.display = 'none';
-                loadingElement.style.display = 'block';
+        // التحكم في شريط البحث المركزي
+        const searchOverlay = document.getElementById('searchOverlay');
+        const closeSearch = document.getElementById('closeSearch');
+        const mainSearchInput = document.getElementById('mainSearchInput');
+        const mainSearchButton = document.getElementById('mainSearchButton');
 
-                // محاكاة عملية التحميل
-                setTimeout(function() {
-                    // إخفاء تأثير التحميل
-                    loadingElement.style.display = 'none';
+        // فتح شريط البحث
+        searchToggle.addEventListener('click', () => {
+            searchOverlay.classList.add('active');
+            mainSearchInput.focus();
+        });
 
-                    // إظهار المقالات التالية
-                    const nextIndex = currentIndex + articlesToShow;
-                    let articlesShown = 0;
-                    
-                    for (let i = currentIndex; i < nextIndex && i < hiddenArticles.length; i++) {
-                        hiddenArticles[i].classList.remove('hidden');
-                        hiddenArticles[i].classList.add('visible');
-                        articlesShown++;
-                        
-                        // نقل المقال إلى قبل زر "عرض المزيد" في الـ DOM
-                        articlesContainer.insertBefore(hiddenArticles[i], loadMoreBtn.parentNode);
-                    }
-                    currentIndex = nextIndex;
+        // إغلاق شريط البحث
+        closeSearch.addEventListener('click', () => {
+            searchOverlay.classList.remove('active');
+        });
 
-                    // إظهار زر "عرض المزيد" إذا كان هناك المزيد من المقالات
-                    if (currentIndex < hiddenArticles.length) {
-                        loadMoreBtn.style.display = 'block';
-                    } else {
-                        loadMoreBtn.style.display = 'none';
-                    }
-                }, 800); // وقت التأخير لمحاكاة التحميل (800 مللي ثانية)
-            });
+        // البحث من الشريط المركزي
+        mainSearchButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (mainSearchInput.value.trim() !== '') {
+                alert('سيتم البحث عن: ' + mainSearchInput.value);
+                searchOverlay.classList.remove('active');
+                // هنا يمكنك إضافة منطق البحث الفعلي
+            }
+        });
+
+        // السماح بالبحث بالضغط على Enter
+        mainSearchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (mainSearchInput.value.trim() !== '') {
+                    alert('سيتم البحث عن: ' + mainSearchInput.value);
+                    searchOverlay.classList.remove('active');
+                    // هنا يمكنك إضافة منطق البحث الفعلي
+                }
+            }
+        });
+
+        // إغلاق الشريط عند الضغط على ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+                searchOverlay.classList.remove('active');
+            }
         });
     </script>
 </body>
